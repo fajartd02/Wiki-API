@@ -79,5 +79,21 @@ app.route("/articles/:titleName")
             }
        })
    })
-   .post()
+   .put((req, res) => {
+       const { titleName } = req.params;
+       // Update() with overwrite: true 
+       // sekarang di mongoose diganti dengan replaceOne()
+       Article.replaceOne(
+           { title: titleName }, 
+           { title: req.body.title, content: req.body.content },
+           (err, result) => {
+               if(!err) {
+                   res.send("Success update!");
+               } else {
+                   res.send(err + "\n" + result);
+               }
+           }
+        );
+   })
+   .patch()
    .delete();
