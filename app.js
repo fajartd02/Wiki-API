@@ -95,5 +95,16 @@ app.route("/articles/:titleName")
            }
         );
    })
-   .patch()
+   .patch((req, res) => {
+      const { titleName } = req.params;
+      Article.updateOne(
+          { title: titleName },
+          { $set: req.body },
+          (err, result) => {
+              if(!err) {
+                  res.send("Update success!");
+              }
+          }
+      )
+   })
    .delete();
