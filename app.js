@@ -107,4 +107,14 @@ app.route("/articles/:titleName")
           }
       )
    })
-   .delete();
+   .delete((req, res) => {
+        const { titleName } = req.params;
+        Article.deleteOne(
+            { title: titleName },
+            (err) => {
+                if(!err) {
+                    res.send("Delete success");
+                }
+            }
+        )
+   });
